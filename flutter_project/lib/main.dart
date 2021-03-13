@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'screens/CreateScreen.dart';
+import 'screens/CreateScreen.dart';
+import 'screens/CreateScreen.dart';
+import 'screens/CreateScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,13 +45,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _biggerFont = TextStyle(fontSize: 18.0);
+  final myController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    myController.addListener(_onChangeSearch); //hook listener, when changing input
+  }
 
   void _pushCreate(){ //create a new entry
     Navigator.pushNamed(context, 'CreatePage');
   }
 
-  void _pushSearch(){ //TODO participate -> show in main home screen
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    myController.dispose();
+    super.dispose();
+  }
 
+  void _onChangeSearch(){ //TODO participate -> show in main home screen
+    print("Second text field: "+ myController.text);
   }
 
   @override
@@ -58,12 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           actions: [
             IconButton(icon: Icon(Icons.add), onPressed: _pushCreate), //better visuals with Containers, Add Dividers
-            IconButton(icon: Icon(Icons.search), onPressed: _pushSearch)
           ], //TODO transitions to other views!
         ),
-        body: Center(
-           child: Text("This is a test", style: _biggerFont,)
-        ), //TODO better body construction
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child :TextField(
+              decoration: new InputDecoration(
+                  hintText: "Search"
+              ),
+              controller: myController,
+            ),
+        ),
       );
   }
 }

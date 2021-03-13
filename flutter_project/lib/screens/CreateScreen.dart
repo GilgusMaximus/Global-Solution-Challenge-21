@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//globals
+final UserInput = <String>{};
+
 class CreatePage extends StatefulWidget {
   @override
   _CreatePageState createState() => _CreatePageState();
@@ -10,8 +13,6 @@ class _CreatePageState extends State<CreatePage> {
 
   final myController = TextEditingController(); //controller for handling the textField
 
-  String userInput ="";
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -20,9 +21,8 @@ class _CreatePageState extends State<CreatePage> {
   }
 
   void _onSubmitButtonPressed(){ //when pressing button
-    setState(() {
-      userInput = myController.text;
-    });
+    if(!UserInput.contains(myController.text))
+      UserInput.add(myController.text); //add to controller
 
     showDialog(
       context: context,
