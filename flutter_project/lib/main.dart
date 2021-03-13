@@ -7,32 +7,18 @@ import 'package:global_solution_challenge_21/services/auth.dart';
 import 'screens/CreateScreen.dart';
 
 void main() {
-  //runApp(MyApp());
   runApp(MyAuthApp());
 }
-
 
 class MyAuthApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<CustomUser>.value(
+    return MaterialApp(
+      home: StreamProvider<CustomUser>.value(
         value: AuthService().onAuthStateChanged,
         initialData: null,
-        child: MaterialApp(
-          home: Wrapper(),
+        child:  Wrapper(),
       ),
-    );
-  }
-}
-
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ScienceCollab', //TODO better title for app
-      debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) { //set page transitions settings. Can be used with Navigator.pushNamed(context, 'name');
         switch (settings.name) {
           case 'CreatePage':
@@ -42,49 +28,11 @@ class MyApp extends StatelessWidget {
             return null;
         }
       },
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: MyHomePage(title: 'Home Page'),
+      title: 'ScienceCollab'
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
-  void _pushCreate(){ //create a new entry
-    Navigator.pushNamed(context, 'CreatePage');
-  }
-
-  void _pushSearch(){ //TODO participate -> show in main home screen
-
-  }
-
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar( //navigation window
-          title: Text(widget.title),
-          actions: [
-            IconButton(icon: Icon(Icons.add), onPressed: _pushCreate), //better visuals with Containers, Add Dividers
-            IconButton(icon: Icon(Icons.search), onPressed: _pushSearch)
-          ], //TODO transitions to other views!
-        ),
-        body: Center(
-           child: Text("This is a test", style: _biggerFont,)
-        ), //TODO better body construction
-      );
-  }
-}
-
-
