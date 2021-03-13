@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/teamgreen/global_solution_challenge_21/BuildConfig.java
+ com.teamgreen.global_solution_challenge_21.BuildConfig

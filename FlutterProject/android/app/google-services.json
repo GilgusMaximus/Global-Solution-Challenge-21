@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620808300061",
+    "project_id": "science-collab",
+    "storage_bucket": "science-collab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620808300061:android:80c68227fa5a4eccbe88f4",
+        "android_client_info": {
+          "package_name": "com.teamgreen.sciencecollab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620808300061-pkumlvepoogop7hbj1qkamen5hrmjouu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnF2Tcw-v822Wok2SCTYBIVJpRez_uj2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620808300061-pkumlvepoogop7hbj1qkamen5hrmjouu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

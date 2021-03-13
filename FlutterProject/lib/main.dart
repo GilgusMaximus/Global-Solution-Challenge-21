@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'University Matching', //TODO better title for app
+      title: 'ScienceCollab', //TODO better title for app
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) { //set page transitions settings. Can be used with Navigator.pushNamed(context, 'name');
         switch (settings.name) {
