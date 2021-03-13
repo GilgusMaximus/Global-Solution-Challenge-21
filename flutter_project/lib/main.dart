@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onChangeSearch(){ //TODO participate -> show in main home screen
-    print("Debug: "+filteredList.elementAt(0)+UserInput.elementAt(0));
+    //print("Debug: "+ () => ((filteredList.length > 0) ?  filteredList.elementAt(0)+UserInput.elementAt(0) : ''));
     setState(() {
       filteredList.clear();
       for(String word in UserInput){
@@ -95,7 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
             return null;
 
           return _builtRow(filteredList.elementAt(index));
-        })
+        },
+            itemCount: filteredList.length * 2
+        )
     );
   }
 
