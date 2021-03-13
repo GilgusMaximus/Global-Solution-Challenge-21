@@ -1,19 +1,17 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
 
   final Function toggleView;
 
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
 
   final AuthService _authService = AuthService();
 
@@ -28,7 +26,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign In'),
+        title: Text('Register'),
         actions: <Widget>[
           TextButton.icon(
               onPressed: () {
@@ -36,7 +34,7 @@ class _SignInState extends State<SignIn> {
                 widget.toggleView();
               },
               icon: Icon(Icons.person),
-              label: Text('Register'))
+              label: Text('Sign In'))
         ],
       ),
       body: Container(
@@ -67,12 +65,12 @@ class _SignInState extends State<SignIn> {
                 print(password);
               },
               child: Text(
-                'Sign In',
+                'Register',
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white
+                  primary: Colors.red,
+                  onPrimary: Colors.white
               ),
             ),
           ],

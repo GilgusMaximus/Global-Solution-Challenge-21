@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/screens/Wrapper.dart';
