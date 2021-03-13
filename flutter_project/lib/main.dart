@@ -2,13 +2,8 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'screens/CreateScreen.dart';
-import 'screens/CreateScreen.dart';
-import 'screens/CreateScreen.dart';
-import 'screens/CreateScreen.dart';
-import 'screens/CreateScreen.dart';
-import 'screens/CreateScreen.dart';
 import 'screens/CreateScreen.dart';
 
 void main() {
@@ -52,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _biggerFont = TextStyle(fontSize: 18.0);
   final myController = TextEditingController();
 
-  final filteredList = <String>{"haha", "hehe"}; //remove items from here where input != what we want
+  final filteredList = <Entry>{}; //remove items from here where input != what we want
 
   @override
   void initState() {
@@ -74,12 +69,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onChangeSearch(){ //TODO participate -> show in main home screen
-    //print("Debug: "+ () => ((filteredList.length > 0) ?  filteredList.elementAt(0)+UserInput.elementAt(0) : ''));
     setState(() {
       filteredList.clear();
-      for(String word in UserInput){
-        if(word.contains(myController.text))
-          filteredList.add(word);
+      for(Entry entry in UserInput){
+        if(entry.Identifier.contains(myController.text))
+          filteredList.add(entry);
       }
     });
   }
@@ -101,27 +95,40 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _builtRow(String input){
+  Widget _builtRow(Entry entry){
     return ListTile(
       title: Text(
-          input,
+          entry.Identifier,
           style: _biggerFont),
       trailing: Icon(
         Icons.search,
         color: Colors.cyan,
       ),
       onTap: (){//when tapping the line
-        //TODO aufrufen des items
-        showDialog(//Debug
+        //show description for item
+        Alert(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              // Retrieve the text the that user has entered by using the
-              // TextEditingController.
-              content: Text(input), //access textfield with myController.text
-            );
-          },
-        );
+          type: AlertType.info,
+          title: entry.Identifier,
+          content: Column(
+            children: <Widget>[
+              Text(entry.Organisation,
+            style: _biggerFont,
+                ),
+
+            ],
+          ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Got it!",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context), //TODO can also do fancy stuff here!
+              width: 120,
+            )
+          ],
+        ).show();
 
       },
     );
