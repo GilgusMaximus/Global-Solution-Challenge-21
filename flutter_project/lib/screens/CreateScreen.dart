@@ -1,15 +1,25 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 //globals
-final UserInput = <Entry>{};
+//final UserInput = <Entry>{};
+HashMap UserInput = HashMap<int, Entry>();
 
 class Entry{
   String Identifier;
   String Organisation;
   String Comment = "";
   String Contact = "";
+  int hash; //identifier for access in UserInput
 
-  Entry(@required this.Identifier, @required this.Organisation, this.Comment, this.Contact);
+  Entry(@required this.Identifier, @required this.Organisation, this.Comment, this.Contact){
+    hash = generateHash(this.Identifier, this.Organisation);
+    print("Debug Hash: "+hash.toString());
+  }
+
+  int generateHash(String s1, String s2) =>
+      (<String>[s1, s2]..sort()).join().hashCode;
 
 }
 
@@ -35,9 +45,11 @@ class _CreatePageState extends State<CreatePage> {
 
   void _onSubmitButtonPressed(){ //when pressing button
     Entry entry = Entry(IDController.text, OrgaController.text, CommentController.text, ContactController.text);
+    int hashVal = entry.hash;
 
     if(IDController.text != "" && OrgaController.text != ""){ //TODO generate Hash and check if our Obj is already in List
-      UserInput.add(entry); //add to controller
+      //UserInput.update(hashVal, (value) => entry); //add to User
+      UserInput[hashVal] = entry;
 
       showDialog(
         context: context,

@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onChangeSearch(){ //TODO participate -> show in main home screen
     setState(() {
       filteredList.clear();
-      for(Entry entry in UserInput){
+      for(Entry entry in UserInput.values){
         if(entry.Identifier.contains(myController.text))
           filteredList.add(entry);
       }
@@ -105,20 +105,20 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.cyan,
       ),
       onTap: (){//when tapping the line
-        //show description for item
+        //show description for item, use Emoticons
         Alert(
           context: context,
           type: AlertType.info,
           title: entry.Identifier,
           content: Column(
             children: <Widget>[
-              Text(entry.Organisation,
+              Text('\u{1F4D6} '+entry.Organisation,
                   style: _biggerFont,
                 ),
-              Text(entry.Comment,
+              Text('\u{1F4C1} '+entry.Comment,
                 style: _biggerFont,
               ),
-              Text(entry.Contact,
+              Text('\u{2709} '+entry.Contact,
                 style: _biggerFont,
               ),
 
