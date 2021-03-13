@@ -113,8 +113,14 @@ class _MyHomePageState extends State<MyHomePage> {
           content: Column(
             children: <Widget>[
               Text(entry.Organisation,
-            style: _biggerFont,
+                  style: _biggerFont,
                 ),
+              Text(entry.Comment,
+                style: _biggerFont,
+              ),
+              Text(entry.Contact,
+                style: _biggerFont,
+              ),
 
             ],
           ),
