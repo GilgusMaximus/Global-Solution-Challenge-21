@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
 
 class Register extends StatefulWidget {
@@ -14,10 +15,14 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final AuthService _authService = AuthService();
+  // Asssociated to form
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = "";
   String password = "";
+
+  String registerError = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +44,15 @@ class _RegisterState extends State<Register> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
           children: <Widget>[
             SizedBox(height: 20.0),
             // E-Mail
             TextFormField(
+              // validator: null if an email was entered, otherwise helper text
+              validator: (val) => val.isEmpty ? 'Please enter an Email' : null,
               // wenn etwas eingetragen wird in das Text Feld
               onChanged: (val) {
                 setState(() => email = val);
@@ -52,6 +61,7 @@ class _RegisterState extends State<Register> {
             SizedBox(height: 20.0),
             // Passwort
             TextFormField(
+              validator: (val) => val.length < 6 ? 'Use at least 6 characters' : null,
               obscureText: true,
               // wenn etwas eingetragen wird in das Text Feld
               onChanged: (val) {
@@ -61,8 +71,16 @@ class _RegisterState extends State<Register> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
-                print(email);
-                print(password);
+                // validates the input of our form fields
+                // if a string is returned, it will place the text automatically on the view
+                if(_formKey.currentState.validate()) {
+                  dynamic user = await _authService.register(email, password);
+                  if(user == null) {
+                    setState(() => registerError = 'Registration failed ');
+                  } else {
+                    print(user);
+                  }
+                }
               },
               child: Text(
                 'Register',
@@ -73,7 +91,13 @@ class _RegisterState extends State<Register> {
                   onPrimary: Colors.white
               ),
             ),
+            SizedBox(height: 12,),
+            Text(
+              registerError,
+              style: TextStyle(color: Colors.red),
+            )
           ],
+        ),
         ),
       ),
     );

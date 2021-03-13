@@ -16,10 +16,13 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = "";
   String password = "";
+
+  String signInError = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +44,14 @@ class _SignInState extends State<SignIn> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
           children: <Widget>[
             SizedBox(height: 20.0),
             // E-Mail
             TextFormField(
+              validator: (val) => val.isEmpty ? 'Please enter an Email' : null,
               // wenn etwas eingetragen wird in das Text Feld
               onChanged: (val) {
                 setState(() => email = val);
@@ -54,6 +60,7 @@ class _SignInState extends State<SignIn> {
             SizedBox(height: 20.0),
             // Passwort
             TextFormField(
+              validator: (val) => val.length < 6 ? 'Use at least 6 characters' : null,
               obscureText: true,
               // wenn etwas eingetragen wird in das Text Feld
               onChanged: (val) {
@@ -63,8 +70,16 @@ class _SignInState extends State<SignIn> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
-                print(email);
-                print(password);
+                // validates the input of our form fields
+                // if a string is returned, it will place the text automatically on the view
+                if(_formKey.currentState.validate()) {
+                  dynamic user = await _authService.signInWithEmail(email, password);
+                  if(user == null) {
+                    setState(() => signInError = 'Sign in failed ');
+                  } else {
+                    print(user);
+                  }
+                }
               },
               child: Text(
                 'Sign In',
@@ -75,7 +90,13 @@ class _SignInState extends State<SignIn> {
                 onPrimary: Colors.white
               ),
             ),
+            SizedBox(height: 12,),
+            Text(
+              signInError,
+              style: TextStyle(color: Colors.red),
+            )
           ],
+        ),
         ),
       ),
     );
