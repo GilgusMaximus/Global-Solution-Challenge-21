@@ -112,14 +112,29 @@ class _MyHomePageState extends State<MyHomePage> {
           title: entry.Identifier,
           content: Column(
             children: <Widget>[
-              Text('\u{1F4D6} '+entry.Organisation,
-                  style: _biggerFont,
-                ),
-              Text('\u{1F4C1} '+entry.Comment,
-                style: _biggerFont,
+              Row(
+                children: [
+                  Icon(Icons.apartment),
+                  Text(entry.Organisation,
+                    style: _biggerFont,
+                  ),
+                ],
               ),
-              Text('\u{2709} '+entry.Contact,
-                style: _biggerFont,
+              Row(
+                children: [
+                  Icon(Icons.title),
+                  Text(entry.Comment,
+                    style: _biggerFont,
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.mail),
+                  Text(entry.Contact,
+                    style: _biggerFont,
+                  ),
+                ],
               ),
 
             ],
@@ -128,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
             DialogButton(
               child: Text(
                 "Got it!",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               onPressed: () => Navigator.pop(context), //TODO can also do fancy stuff here!
               width: 120,
