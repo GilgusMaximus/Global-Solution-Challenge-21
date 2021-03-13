@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'screens/CreateScreen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) { //set page transitions settings. Can be used with Navigator.pushNamed(context, 'name');
         switch (settings.name) {
           case 'CreatePage':
-            return PageTransition(child: CreatePage(), type: PageTransitionType.scale);
+            return PageTransition(child: CreatePage(), type: PageTransitionType.rightToLeft);
             break;
           default:
             return null;
@@ -66,24 +68,4 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class CreatePage extends StatefulWidget {
-  @override
-  _CreatePageState createState() => _CreatePageState();
-}
-
-class _CreatePageState extends State<CreatePage> {
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar( //navigation window
-        title: Text("Create a new Proposal"),
-      ),
-      body: Center(
-          child: Text("This is a test", style: _biggerFont,)
-      ), //TODO better body construction
-    );;
-  }
-}
 
