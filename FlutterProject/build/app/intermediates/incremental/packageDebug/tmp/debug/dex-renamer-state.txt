@@ -1,7 +1,0 @@
-#Sat Mar 13 12:56:53 CET 2021
-base.0=D\:\\Workspace\\Flutter\\Global-Solution-Challenge-21\\FlutterProject\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=D\:\\Workspace\\Flutter\\Global-Solution-Challenge-21\\FlutterProject\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
