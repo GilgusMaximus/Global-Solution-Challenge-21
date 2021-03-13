@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:global_solution_challenge_21/services/auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
+
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -11,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _biggerFont = TextStyle(fontSize: 18.0);
+  final AuthService _authService = AuthService();
 
   void _pushCreate() {
     //create a new entry
@@ -35,10 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ], //TODO transitions to other views!
       ),
       body: Center(
-          child: Text(
-        "This is a test",
-        style: _biggerFont,
-      )), //TODO better body construction
+        child: ElevatedButton(
+          child: Text('Sign Out'),
+          onPressed: () async  {
+            dynamic result = await _authService.signOut();
+          },
+        ),
+      ), //TODO better body construction
     ));
   }
 }

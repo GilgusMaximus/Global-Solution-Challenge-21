@@ -1,13 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/screens/Wrapper.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:provider/provider.dart';
+import 'package:global_solution_challenge_21/services/auth.dart';
 import 'screens/CreateScreen.dart';
 
 void main() {
   //runApp(MyApp());
-  runApp(Wrapper());
+  runApp(MyAuthApp());
 }
+
+
+class MyAuthApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<CustomUser>.value(
+        value: AuthService().onAuthStateChanged,
+        initialData: null,
+        child: MaterialApp(
+          home: Wrapper(),
+      ),
+    );
+  }
+}
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
