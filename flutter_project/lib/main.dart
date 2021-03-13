@@ -1,6 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'screens/CreateScreen.dart';
+import 'screens/CreateScreen.dart';
+import 'screens/CreateScreen.dart';
 import 'screens/CreateScreen.dart';
 import 'screens/CreateScreen.dart';
 import 'screens/CreateScreen.dart';
@@ -47,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final _biggerFont = TextStyle(fontSize: 18.0);
   final myController = TextEditingController();
 
+  final filteredList = <String>{"haha", "hehe"}; //remove items from here where input != what we want
+
   @override
   void initState() {
     super.initState();
@@ -67,7 +74,55 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _onChangeSearch(){ //TODO participate -> show in main home screen
-    print("Second text field: "+ myController.text);
+    print("Debug: "+filteredList.elementAt(0)+UserInput.elementAt(0));
+    setState(() {
+      filteredList.clear();
+      for(String word in UserInput){
+        if(word.contains(myController.text))
+          filteredList.add(word);
+      }
+    });
+  }
+
+  Widget _builtList(){
+    return Flexible(
+        child: ListView.builder(itemBuilder: (context, i){
+          if(i.isOdd)
+            return Divider();
+
+          final index = i~/2; //TODO check for end of list
+          if(index>= filteredList.length || filteredList.length ==0)
+            return null;
+
+          return _builtRow(filteredList.elementAt(index));
+        })
+    );
+  }
+
+  Widget _builtRow(String input){
+    return ListTile(
+      title: Text(
+          input,
+          style: _biggerFont),
+      trailing: Icon(
+        Icons.search,
+        color: Colors.cyan,
+      ),
+      onTap: (){//when tapping the line
+        //TODO aufrufen des items
+        showDialog(//Debug
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              // Retrieve the text the that user has entered by using the
+              // TextEditingController.
+              content: Text(input), //access textfield with myController.text
+            );
+          },
+        );
+
+      },
+    );
   }
 
   @override
@@ -81,12 +136,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child :TextField(
-              decoration: new InputDecoration(
-                  hintText: "Search"
+          child :Column(
+            children: [
+              TextField(
+                decoration: new InputDecoration(
+                    hintText: "Search"
+                ),
+                controller: myController,
               ),
-              controller: myController,
-            ),
+             _builtList()
+            ],
+          ),
         ),
       );
   }
