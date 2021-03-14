@@ -26,12 +26,13 @@ class DatabaseService {
     return orgaCollection.doc(docId).update(elements);
   }
 
-  Future createProjectOffer(String orgaName, String field, String description) {
+  Future createProjectOffer(String orgaName, String field, String description, String contact) {
     return projectCollection.add({
       'name': orgaName,
       'field': field,
       'userid': uid,
       'description': description,
+      'contact': contact,
     });
   }
 

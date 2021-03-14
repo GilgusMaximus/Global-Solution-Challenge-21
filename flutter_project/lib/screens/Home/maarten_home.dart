@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/screens/favScreen.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -6,9 +7,10 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../CreateScreen.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title, this.user}) : super(key: key);
 
   final String title;
+  final CustomUser user;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _pushCreate(){ //create a new entry
-    Navigator.pushNamed(context, 'CreatePage');
+    Navigator.pushNamed(context, 'CreatePage', arguments: widget.user);
   }
 
   @override
