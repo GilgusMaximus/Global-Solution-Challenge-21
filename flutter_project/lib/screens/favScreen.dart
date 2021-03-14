@@ -28,13 +28,14 @@ class _FavScreenState extends State<FavScreen> {
   }
 
   Widget _builtRow(Entry entry){
+    final alreadyFav = (favList.contains(entry));
     return ListTile(
       title: Text(
           entry.Identifier,
           style: _biggerFont),
       trailing: Icon(
         Icons.search,
-        color: Colors.cyan,
+        color: alreadyFav ? Colors.red : Colors.cyan,
       ),
       onTap: (){//when tapping the line
         //show description for item, use Emoticons
@@ -74,8 +75,7 @@ class _FavScreenState extends State<FavScreen> {
           buttons: [
             DialogButton(
               child: Text(
-                (favList.contains(entry)) //|| newFavList.contains(entry)) || !newDelFavList.contains(entry))
-                    ? "Remove From Favorites" : "Add To Favorites",
+                alreadyFav ? "Remove From Favorites" : "Add To Favorites",
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               onPressed: () {//handle favorites TODO change text of button immediately
