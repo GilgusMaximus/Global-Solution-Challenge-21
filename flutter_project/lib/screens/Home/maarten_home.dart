@@ -154,6 +154,9 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(icon: Icon(Icons.favorite_border), onPressed: (){
               Navigator.pushNamed(context, 'FavPage');
             }),
+            IconButton(icon: Icon(Icons.person), onPressed: (){
+              Navigator.pushNamed(context, 'OwnProposals');
+            }),
             IconButton(icon: Icon(Icons.logout), onPressed: () {
               _authService.signOut();
             })
