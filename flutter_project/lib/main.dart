@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/screens/Wrapper.dart';
+import 'package:global_solution_challenge_21/screens/favScreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
@@ -23,6 +24,9 @@ class MyAuthApp extends StatelessWidget {
         switch (settings.name) {
           case 'CreatePage':
             return PageTransition(child: CreatePage(), type: PageTransitionType.rightToLeft);
+            break;
+          case 'FavPage':
+            return PageTransition(child: FavScreen(), type: PageTransitionType.rightToLeft);
             break;
           default:
             return null;

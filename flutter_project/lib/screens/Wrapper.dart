@@ -13,7 +13,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return MyHomePage(title: 'Cooler Title');
+      return MyHomePage(title: 'Search for Projects');
     }
   }
 }
