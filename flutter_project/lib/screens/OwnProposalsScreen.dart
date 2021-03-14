@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/screens/CreateScreen.dart';
+import 'package:global_solution_challenge_21/services/database.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 final OwnEntries = <Entry>{}; //TODO get all own proposals
@@ -11,6 +12,8 @@ class OwnEntryScreen extends StatefulWidget {
 
 class _OwnEntryScreenState extends State<OwnEntryScreen> {
   final _biggerFont = TextStyle(fontSize: 18.0);
+
+  DatabaseService _database;
 
   @override
   void initState() {
@@ -67,6 +70,7 @@ class _OwnEntryScreenState extends State<OwnEntryScreen> {
                       onFieldSubmitted: (String value){ //Update values
                         entry.Identifier = value; //TODO update this for firebase
                         UserInput[entry.hash] = entry;
+                        _database.updateProjectOffer(entry.docId, {"title": value});
                       },
                     ),
                     TextFormField(
@@ -74,21 +78,29 @@ class _OwnEntryScreenState extends State<OwnEntryScreen> {
                       onFieldSubmitted: (String value){
                         entry.Organisation = value; //TODO update this for firebase
                         UserInput[entry.hash] = entry;
+                        _database.updateProjectOffer(entry.docId, {"name": value});
                       },
                     ),
-                    TextFormField(
+                    Tooltip(message: 'Description',
+                    child:TextFormField(
                       initialValue: entry.Comment,
                       onFieldSubmitted: (String value){
                         entry.Comment = value; //TODO update this for firebase
                         UserInput[entry.hash] = entry;
-                      },
-                    ),
-                    TextFormField(
-                      initialValue: entry.Contact,
-                      onFieldSubmitted: (String value){
-                        entry.Contact = value; //TODO update this for firebase
-                        UserInput[entry.hash] = entry;
-                      },
+                        _database.updateProjectOffer(entry.docId, {"description": value});
+                        }),
+                        textStyle: TextStyle(fontSize: 20),
+                      ),
+                    Tooltip(message: 'Contact Data',
+                      child: TextFormField(
+                        initialValue: entry.Contact,
+                        onFieldSubmitted: (String value){
+                          entry.Contact = value; //TODO update this for firebase
+                          UserInput[entry.hash] = entry;
+                          _database.updateProjectOffer(entry.docId, {"contact": value});
+                        },
+                      ),
+                      textStyle: TextStyle(fontSize: 20),
                     )
                   ],
 
@@ -104,6 +116,8 @@ class _OwnEntryScreenState extends State<OwnEntryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context).settings.arguments;
+    _database = DatabaseService(uid: args);
     return Scaffold(
       appBar: AppBar(
         title: Text("Own Proposals"),

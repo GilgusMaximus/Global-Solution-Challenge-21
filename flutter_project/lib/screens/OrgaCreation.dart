@@ -88,7 +88,7 @@ class _OrgaCreateState extends State<OrgaCreate> {
     _database = DatabaseService(uid: widget._user.uid);
     return Scaffold(
       appBar: AppBar( //navigation window
-        title: Text("Create a new Proposal"),
+        title: Text("Update your organisation's profile"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

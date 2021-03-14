@@ -27,11 +27,12 @@ class DatabaseService {
     return orgaCollection.doc(docId).update(user.getFieldsAsMaps());
   }
 
-  Future createProjectOffer(String orgaName, String field, String description, String contact) {
+  Future createProjectOffer(String orgaName, String field, String description, String contact, String title) {
     return projectCollection.add({
       'name': orgaName,
       'field': field,
       'userid': uid,
+      'title': title,
       'description': description,
       'contact': contact,
     });
@@ -47,7 +48,8 @@ class DatabaseService {
   }
 
   Future searchForProjectString(String searchString, String dataField) {
-    return orgaCollection.where(dataField, isGreaterThanOrEqualTo: searchString).get();
+    print(dataField + " " + searchString);
+    return projectCollection.where(dataField, isGreaterThanOrEqualTo: searchString).where(dataField, isLessThan: searchString + 'z').get();
   }
   
   Future getOrgaData() {

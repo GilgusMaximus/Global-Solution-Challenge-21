@@ -35,7 +35,7 @@ class MyAuthApp extends StatelessWidget {
             return PageTransition(child: OrgaCreate(), type: PageTransitionType.rightToLeft, settings: settings,);
             break;
           case 'OwnProposals':
-            return PageTransition(child: OwnEntryScreen(), type: PageTransitionType.rightToLeft);
+            return PageTransition(child: OwnEntryScreen(), type: PageTransitionType.rightToLeft, settings: settings);
           default:
             return null;
         }

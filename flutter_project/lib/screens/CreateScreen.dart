@@ -14,6 +14,7 @@ class Entry{
   String Comment = "";
   String Contact = "";
   int hash; //identifier for access in UserInput
+  String docId = "";
 
   Entry(@required this.Identifier, @required this.Organisation, this.Comment, this.Contact){
     hash = generateHash(this.Identifier, this.Organisation);
@@ -51,7 +52,7 @@ class _CreatePageState extends State<CreatePage> {
     super.dispose();
   }
 
-  void _onSubmitButtonPressed(){ //when pressing button
+  void _onSubmitButtonPressed() async { //when pressing button
     Entry entry = Entry(IDController.text, OrgaController.text, CommentController.text, ContactController.text);
     int hashVal = entry.hash;
 
@@ -59,7 +60,12 @@ class _CreatePageState extends State<CreatePage> {
       //UserInput.update(hashVal, (value) => entry); //add to User
       UserInput[hashVal] = entry;
 
-      _database.createProjectOffer(entry.Organisation, 'IT', entry.Comment, entry.Contact);
+      dynamic result = await _database.createProjectOffer(entry.Organisation, 'IT', entry.Comment, entry.Contact, entry.Identifier);
+      if(result != null) {
+        entry.docId = result.id;
+      } else {
+        print("Error during file creation");
+      }
 
       showDialog(
         context: context,

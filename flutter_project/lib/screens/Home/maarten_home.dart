@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/models/user.dart';
 import 'package:global_solution_challenge_21/screens/favScreen.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
+import 'package:global_solution_challenge_21/services/database.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../CreateScreen.dart';
@@ -26,12 +27,13 @@ class _MyHomePageState extends State<MyHomePage> {
   //final newDelFavList = <Entry>{};
 
   final AuthService _authService = AuthService();
-
+  DatabaseService _database;
   @override
   void initState() {
     super.initState();
 
     myController.addListener(_onChangeSearch); //hook listener, when changing input
+    _database = DatabaseService(uid: widget.user.uid);
   }
 
   void _pushCreate(){ //create a new entry
@@ -50,12 +52,28 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void _onChangeSearch(){ //TODO participate -> show in main home screen
+  void _onChangeSearch() async { //TODO participate -> show in main home screen
+    if(myController.text == ""){
+      filteredList.clear();
+      return;
+    }
+    dynamic result = await _database.searchForProjectString(myController.text, 'title');
     setState(() {
       filteredList.clear();
-      for(Entry entry in UserInput.values){
-        if(entry.Identifier.contains(myController.text))
-          filteredList.add(entry);
+      print("Post res" + result.docs.toString());
+      if(result != null && result.docs.length != 0) {
+        print(result.docs);
+        result.docs.forEach((document) {
+          filteredList.add(Entry(
+            document['title'],
+            document['name'],
+            document['description'],
+            document['contact']
+          ));
+          }
+        );
+      } else {
+        print("Error: No response from server");
       }
     });
   }
@@ -78,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _builtRow(Entry entry){
-    final alreadyFav = (favList.contains(entry));
+    final alreadyFav = favList.where((fav) => fav.Identifier == entry.Identifier).length > 0 ? true : false;
     return ListTile(
       title: Text(
           entry.Identifier,
@@ -160,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },tooltip: 'Favorites',),
             IconButton(icon: Icon(Icons.account_circle), onPressed: _pushCreateOrga, tooltip: 'Profile',),
             IconButton(icon: Icon(Icons.comment), onPressed: (){
-              Navigator.pushNamed(context, 'OwnProposals');
+              Navigator.pushNamed(context, 'OwnProposals', arguments: widget.user.uid);
             }, tooltip: 'Own Project Offers',),
             IconButton(icon: Icon(Icons.logout), onPressed: () {
               _authService.signOut();
