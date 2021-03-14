@@ -64,7 +64,10 @@ class _OrgaCreateState extends State<OrgaCreate> {
     CountryController.text = (widget._user.country != "") ? widget._user.country : "";
     OrgaNameController.text = (widget._user.name != "") ? widget._user.name : "";
     FieldController.text = (widget._user.fields.length > 0) ? buildCSeperatedString(widget._user.fields) : "";
-    isUniCheckbox = widget._user.isUni;
+    setState(() {
+      isUniCheckbox = widget._user.isUni;
+    });
+
   }
 
   void initState() {
@@ -113,15 +116,15 @@ class _OrgaCreateState extends State<OrgaCreate> {
                 controller: FieldController,
                 onSubmitted: _onSubmitEnter,
               ),
-              // CheckboxListTile(
-              //   title: Text("We are an University:"),
-              //   value: isUniCheckbox,
-              //   onChanged: (newValue) {
-              //     setState(() {
-              //       isUniCheckbox = newValue;
-              //     });
-              //   },
-              // )
+              CheckboxListTile(
+                title: Text("We are an University:"),
+                value: isUniCheckbox,
+                onChanged: (newValue) {
+                  setState(() {
+                    isUniCheckbox = newValue;
+                  });
+                },
+              )
             ],
 
           ),

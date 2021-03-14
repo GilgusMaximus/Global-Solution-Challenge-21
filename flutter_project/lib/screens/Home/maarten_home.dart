@@ -154,14 +154,17 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar( //navigation window
           title: Text(widget.title),
           actions: [
-            IconButton(icon: Icon(Icons.add), onPressed: _pushCreate), //better visuals with Containers, Add Dividers
+            IconButton(icon: Icon(Icons.add), onPressed: _pushCreate, tooltip: 'Create new project offer',), //better visuals with Containers, Add Dividers
             IconButton(icon: Icon(Icons.favorite_border), onPressed: (){
               Navigator.pushNamed(context, 'FavPage');
-            }),
-            IconButton(icon: Icon(Icons.account_circle), onPressed: _pushCreateOrga),
+            },tooltip: 'Favorites',),
+            IconButton(icon: Icon(Icons.account_circle), onPressed: _pushCreateOrga, tooltip: 'Profile',),
+            IconButton(icon: Icon(Icons.comment), onPressed: (){
+              Navigator.pushNamed(context, 'OwnProposals');
+            }, tooltip: 'Own Project Offers',),
             IconButton(icon: Icon(Icons.logout), onPressed: () {
               _authService.signOut();
-            })
+            }, tooltip: 'Sign Out',)
           ], //TODO transitions to other views!
         ),
         body: Padding(
