@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/models/user.dart';
+import 'package:global_solution_challenge_21/screens/favScreen.dart';
 import 'package:global_solution_challenge_21/services/auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -20,6 +21,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final myController = TextEditingController();
 
   final filteredList = <Entry>{}; //remove items from here where input != what we want
+
+  //final newFavList = <Entry>{}; //need for changing icon
+  //final newDelFavList = <Entry>{};
 
   final AuthService _authService = AuthService();
 
@@ -70,13 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _builtRow(Entry entry){
+    final alreadyFav = (favList.contains(entry));
     return ListTile(
       title: Text(
           entry.Identifier,
           style: _biggerFont),
       trailing: Icon(
         Icons.search,
-        color: Colors.cyan,
+        color: alreadyFav ? Colors.red : Colors.cyan,
       ),
       onTap: (){//when tapping the line
         //show description for item, use Emoticons
@@ -115,12 +120,22 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           buttons: [
             DialogButton(
-              child: Text(
-                "Got it!",
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-              onPressed: () => Navigator.pop(context), //TODO can also do fancy stuff here!
-              width: 120,
+              child: (alreadyFav) ? Text("Remove From Favorites", style: TextStyle(color: Colors.white, fontSize: 15))
+              : Text("Add To Favorites", style: TextStyle(color: Colors.white, fontSize: 15)),
+              onPressed: () {//handle favorites TODO change text of button immediately
+                setState(() {//change newly added/deleted lists
+                  if(favList.contains(entry)){
+                    favList.remove(entry);
+                    //newDelFavList.add(entry);
+                  }
+                  else{
+                    favList.add(entry);
+                    //newFavList.add(entry);
+                  }
+                });
+                Navigator.pop(context);
+              },
+              width: 180,
             )
           ],
         ).show();
@@ -136,6 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           actions: [
             IconButton(icon: Icon(Icons.add), onPressed: _pushCreate), //better visuals with Containers, Add Dividers
+            IconButton(icon: Icon(Icons.favorite_border), onPressed: (){
+              Navigator.pushNamed(context, 'FavPage');
+            }),
             IconButton(icon: Icon(Icons.logout), onPressed: () {
               _authService.signOut();
             })
