@@ -39,7 +39,7 @@ class _RegisterState extends State<Register> {
                 widget.toggleView();
               },
               icon: Icon(Icons.person),
-              label: Text('Sign In'))
+              label: Text('Sign In    '))
         ],
       ),
       body: Container(
