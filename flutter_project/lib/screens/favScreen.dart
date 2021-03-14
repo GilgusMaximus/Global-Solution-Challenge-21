@@ -89,6 +89,7 @@ class _FavScreenState extends State<FavScreen> {
                     //newFavList.add(entry);
                   }
                 });
+                Navigator.pop(context);
               },
               width: 180,
             )

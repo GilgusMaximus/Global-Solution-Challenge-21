@@ -20,8 +20,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final filteredList = <Entry>{}; //remove items from here where input != what we want
 
-  final newFavList = <Entry>{}; //need for changing icon
-  final newDelFavList = <Entry>{};
+  //final newFavList = <Entry>{}; //need for changing icon
+  //final newDelFavList = <Entry>{};
 
   final AuthService _authService = AuthService();
 
@@ -72,13 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _builtRow(Entry entry){
+    final alreadyFav = (favList.contains(entry));
     return ListTile(
       title: Text(
           entry.Identifier,
           style: _biggerFont),
       trailing: Icon(
         Icons.search,
-        color: Colors.cyan,
+        color: alreadyFav ? Colors.red : Colors.cyan,
       ),
       onTap: (){//when tapping the line
         //show description for item, use Emoticons
@@ -117,11 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           buttons: [
             DialogButton(
-              child: Text(
-              (favList.contains(entry)) //|| newFavList.contains(entry)) || !newDelFavList.contains(entry))
-                  ? "Remove From Favorites" : "Add To Favorites",
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
+              child: (alreadyFav) ? Text("Remove From Favorites", style: TextStyle(color: Colors.white, fontSize: 15))
+              : Text("Add To Favorites", style: TextStyle(color: Colors.white, fontSize: 15)),
               onPressed: () {//handle favorites TODO change text of button immediately
                 setState(() {//change newly added/deleted lists
                   if(favList.contains(entry)){
@@ -133,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //newFavList.add(entry);
                   }
                 });
+                Navigator.pop(context);
               },
               width: 180,
             )
