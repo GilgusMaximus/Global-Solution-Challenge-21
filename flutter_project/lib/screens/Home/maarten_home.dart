@@ -38,6 +38,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.pushNamed(context, 'CreatePage', arguments: widget.user);
   }
 
+  void _pushCreateOrga() {
+    Navigator.pushNamed(context, 'CreateOrga', arguments: widget.user);
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
@@ -154,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(icon: Icon(Icons.favorite_border), onPressed: (){
               Navigator.pushNamed(context, 'FavPage');
             }),
+            IconButton(icon: Icon(Icons.account_circle), onPressed: _pushCreateOrga),
             IconButton(icon: Icon(Icons.logout), onPressed: () {
               _authService.signOut();
             })

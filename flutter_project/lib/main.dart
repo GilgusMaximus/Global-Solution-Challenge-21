@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_solution_challenge_21/models/user.dart';
+import 'package:global_solution_challenge_21/screens/OrgaCreation.dart';
 import 'package:global_solution_challenge_21/screens/Wrapper.dart';
 import 'package:global_solution_challenge_21/screens/favScreen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -28,6 +29,9 @@ class MyAuthApp extends StatelessWidget {
             break;
           case 'FavPage':
             return PageTransition(child: FavScreen(), type: PageTransitionType.rightToLeft);
+            break;
+          case 'CreateOrga':
+            return PageTransition(child: OrgaCreate(), type: PageTransitionType.rightToLeft, settings: settings,);
             break;
           default:
             return null;

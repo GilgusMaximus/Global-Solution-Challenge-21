@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:global_solution_challenge_21/models/user.dart';
 
 class DatabaseService {
 
@@ -22,8 +23,8 @@ class DatabaseService {
     });
   }
 
-  Future updateOrganisationData(String docId, Map<String, dynamic> elements) {
-    return orgaCollection.doc(docId).update(elements);
+  Future updateOrganisationData(String docId, CustomUser user) {
+    return orgaCollection.doc(docId).update(user.getFieldsAsMaps());
   }
 
   Future createProjectOffer(String orgaName, String field, String description, String contact) {
@@ -48,4 +49,9 @@ class DatabaseService {
   Future searchForProjectString(String searchString, String dataField) {
     return orgaCollection.where(dataField, isGreaterThanOrEqualTo: searchString).get();
   }
+  
+  Future getOrgaData() {
+    return orgaCollection.where('uId', isEqualTo: uid).get();
+  }
+  
 }
