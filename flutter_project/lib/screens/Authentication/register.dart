@@ -27,9 +27,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.cyan,
+        foregroundColor: Colors.white,
         elevation: 0.0,
         title: Text('Register'),
         actions: <Widget>[
@@ -38,8 +38,11 @@ class _RegisterState extends State<Register> {
                 // returns to widget of state
                 widget.toggleView();
               },
-              icon: Icon(Icons.person),
-              label: Text('Sign In    '))
+              icon: Icon(Icons.person, color: Colors.black,),
+              label: Text('Sign In    ',
+              style: TextStyle(color: Colors.black),
+              ),
+          )
         ],
       ),
       body: Container(
@@ -48,6 +51,8 @@ class _RegisterState extends State<Register> {
           key: _formKey,
           child: Column(
           children: <Widget>[
+            Text("ScienceCollab",
+              style: TextStyle(fontSize: 40),),
             SizedBox(height: 20.0),
             // E-Mail
             TextFormField(
@@ -76,7 +81,7 @@ class _RegisterState extends State<Register> {
                 if(_formKey.currentState.validate()) {
                   dynamic user = await _authService.register(email, password);
                   if(user == null) {
-                    setState(() => registerError = 'Registration failed ');
+                    setState(() => registerError = 'Registration failed. Please use a correct E-mail and password ');
                   } else {
                     print(user);
                   }
@@ -87,7 +92,7 @@ class _RegisterState extends State<Register> {
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+                  primary: Colors.cyan[900],
                   onPrimary: Colors.white
               ),
             ),
@@ -95,7 +100,7 @@ class _RegisterState extends State<Register> {
             Text(
               registerError,
               style: TextStyle(color: Colors.red),
-            )
+            ),
           ],
         ),
         ),

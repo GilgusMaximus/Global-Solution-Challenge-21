@@ -48,7 +48,7 @@ class AuthService {
     try {
       UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       DatabaseService db = DatabaseService(uid: result.user.uid);
-      await db.createOrganization('Rumba', 'Nicaragua', ['IT', 'Math'], true);
+      await db.createOrganization('', '', [], false);
       dynamic res = await db.searchForOrgaString('Nic', 'country');
       print("Search Result" + res.toString());
 

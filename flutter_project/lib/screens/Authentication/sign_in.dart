@@ -27,9 +27,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.cyan,
         elevation: 0.0,
         title: Text('Sign In'),
         actions: <Widget>[
@@ -38,8 +37,8 @@ class _SignInState extends State<SignIn> {
                 // returns to widget of state
                 widget.toggleView();
               },
-              icon: Icon(Icons.person),
-              label: Text('Register     '))
+              icon: Icon(Icons.person, color: Colors.black,),
+              label: Text('Register     ', style: TextStyle(color: Colors.black),))
         ],
       ),
       body: Container(
@@ -48,6 +47,8 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: Column(
           children: <Widget>[
+            Text("ScienceCollab",
+              style: TextStyle(fontSize: 40),),
             SizedBox(height: 20.0),
             // E-Mail
             TextFormField(
@@ -75,7 +76,7 @@ class _SignInState extends State<SignIn> {
                 if(_formKey.currentState.validate()) {
                   dynamic user = await _authService.signInWithEmail(email, password);
                   if(user == null) {
-                    setState(() => signInError = 'Sign in failed ');
+                    setState(() => signInError = 'Sign in failed. Please use correct credentials ');
                   } else {
                     print(user);
                   }
@@ -86,7 +87,7 @@ class _SignInState extends State<SignIn> {
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+                primary: Colors.cyan[900],
                 onPrimary: Colors.white
               ),
             ),
