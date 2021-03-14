@@ -11,6 +11,7 @@ void main() {
 }
 
 class MyAuthApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +23,7 @@ class MyAuthApp extends StatelessWidget {
       onGenerateRoute: (settings) { //set page transitions settings. Can be used with Navigator.pushNamed(context, 'name');
         switch (settings.name) {
           case 'CreatePage':
-            return PageTransition(child: CreatePage(), type: PageTransitionType.rightToLeft);
+            return PageTransition(child: CreatePage(), type: PageTransitionType.rightToLeft, settings: settings,);
             break;
           default:
             return null;

@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:global_solution_challenge_21/models/user.dart';
+import 'package:global_solution_challenge_21/services/database.dart';
 
 //globals
 //final UserInput = <Entry>{};
@@ -24,6 +26,9 @@ class Entry{
 }
 
 class CreatePage extends StatefulWidget {
+
+  CustomUser _user = null;
+
   @override
   _CreatePageState createState() => _CreatePageState();
 }
@@ -35,6 +40,9 @@ class _CreatePageState extends State<CreatePage> {
   final OrgaController = TextEditingController();
   final CommentController = TextEditingController();
   final ContactController = TextEditingController();
+  DatabaseService _database = null;
+
+
 
   @override
   void dispose() {
@@ -50,6 +58,8 @@ class _CreatePageState extends State<CreatePage> {
     if(IDController.text != "" && OrgaController.text != ""){ //TODO generate Hash and check if our Obj is already in List
       //UserInput.update(hashVal, (value) => entry); //add to User
       UserInput[hashVal] = entry;
+
+      _database.createProjectOffer(entry.Organisation, 'IT', entry.Comment, entry.Contact);
 
       showDialog(
         context: context,
@@ -76,6 +86,9 @@ class _CreatePageState extends State<CreatePage> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context).settings.arguments;
+    widget._user = args;
+    _database = DatabaseService(uid: widget._user.uid);
     return Scaffold(
       appBar: AppBar( //navigation window
         title: Text("Create a new Proposal"),
